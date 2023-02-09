@@ -1,0 +1,368 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="TMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="admin">
+          <Key>
+            <PropertyRef Name="adminId" />
+          </Key>
+          <Property Name="adminId" Type="int" Nullable="false" />
+          <Property Name="contactId" Type="int" />
+          <Property Name="email" Type="varchar" MaxLength="70" />
+          <Property Name="password" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="complain">
+          <Key>
+            <PropertyRef Name="complainId" />
+          </Key>
+          <Property Name="complainId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="studentId" Type="int" />
+          <Property Name="complain" Type="text" />
+        </EntityType>
+        <EntityType Name="contactUs">
+          <Key>
+            <PropertyRef Name="contactId" />
+          </Key>
+          <Property Name="contactId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="contactName" Type="varchar" MaxLength="30" />
+          <Property Name="email" Type="varchar" MaxLength="70" />
+          <Property Name="message" Type="text" />
+        </EntityType>
+        <EntityType Name="fees">
+          <Key>
+            <PropertyRef Name="feeId" />
+          </Key>
+          <Property Name="feeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="studentID" Type="int" />
+          <Property Name="fee" Type="int" />
+          <Property Name="status" Type="varchar" MaxLength="30" />
+          <Property Name="dateTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="route">
+          <Key>
+            <PropertyRef Name="routeId" />
+          </Key>
+          <Property Name="routeId" Type="int" Nullable="false" />
+          <Property Name="studentId" Type="int" />
+          <Property Name="routeStart" Type="varchar" MaxLength="50" />
+          <Property Name="routeStop" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="student">
+          <Key>
+            <PropertyRef Name="studentId" />
+          </Key>
+          <Property Name="studentId" Type="int" Nullable="false" />
+          <Property Name="studentName" Type="varchar" MaxLength="30" />
+          <Property Name="studentEmail" Type="varchar" MaxLength="60" />
+          <Property Name="studentAge" Type="int" />
+          <Property Name="studentPassword" Type="varchar" MaxLength="70" />
+          <Property Name="studentAddress" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <Association Name="FK__admin__contactId__2E1BDC42">
+          <End Role="contactUs" Type="Self.contactUs" Multiplicity="0..1" />
+          <End Role="admin" Type="Self.admin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="contactUs">
+              <PropertyRef Name="contactId" />
+            </Principal>
+            <Dependent Role="admin">
+              <PropertyRef Name="contactId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__complain__studen__30F848ED">
+          <End Role="student" Type="Self.student" Multiplicity="0..1" />
+          <End Role="complain" Type="Self.complain" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="student">
+              <PropertyRef Name="studentId" />
+            </Principal>
+            <Dependent Role="complain">
+              <PropertyRef Name="studentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__fees__studentID__267ABA7A">
+          <End Role="student" Type="Self.student" Multiplicity="0..1" />
+          <End Role="fees" Type="Self.fees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="student">
+              <PropertyRef Name="studentId" />
+            </Principal>
+            <Dependent Role="fees">
+              <PropertyRef Name="studentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__route__studentId__29572725">
+          <End Role="student" Type="Self.student" Multiplicity="0..1" />
+          <End Role="route" Type="Self.route" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="student">
+              <PropertyRef Name="studentId" />
+            </Principal>
+            <Dependent Role="route">
+              <PropertyRef Name="studentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TMSModelStoreContainer">
+          <EntitySet Name="admin" EntityType="Self.admin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="complain" EntityType="Self.complain" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="contactUs" EntityType="Self.contactUs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="fees" EntityType="Self.fees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="route" EntityType="Self.route" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="student" EntityType="Self.student" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__admin__contactId__2E1BDC42" Association="Self.FK__admin__contactId__2E1BDC42">
+            <End Role="contactUs" EntitySet="contactUs" />
+            <End Role="admin" EntitySet="admin" />
+          </AssociationSet>
+          <AssociationSet Name="FK__complain__studen__30F848ED" Association="Self.FK__complain__studen__30F848ED">
+            <End Role="student" EntitySet="student" />
+            <End Role="complain" EntitySet="complain" />
+          </AssociationSet>
+          <AssociationSet Name="FK__fees__studentID__267ABA7A" Association="Self.FK__fees__studentID__267ABA7A">
+            <End Role="student" EntitySet="student" />
+            <End Role="fees" EntitySet="fees" />
+          </AssociationSet>
+          <AssociationSet Name="FK__route__studentId__29572725" Association="Self.FK__route__studentId__29572725">
+            <End Role="student" EntitySet="student" />
+            <End Role="route" EntitySet="route" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TMSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="admin">
+          <Key>
+            <PropertyRef Name="adminId" />
+          </Key>
+          <Property Name="adminId" Type="Int32" Nullable="false" />
+          <Property Name="contactId" Type="Int32" />
+          <Property Name="email" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="contactU" Relationship="Self.FK__admin__contactId__2E1BDC42" FromRole="admin" ToRole="contactUs" />
+        </EntityType>
+        <EntityType Name="complain">
+          <Key>
+            <PropertyRef Name="complainId" />
+          </Key>
+          <Property Name="complainId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="studentId" Type="Int32" />
+          <Property Name="complain1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="student" Relationship="Self.FK__complain__studen__30F848ED" FromRole="complain" ToRole="student" />
+        </EntityType>
+        <EntityType Name="contactU">
+          <Key>
+            <PropertyRef Name="contactId" />
+          </Key>
+          <Property Name="contactId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="contactName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="message" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="admins" Relationship="Self.FK__admin__contactId__2E1BDC42" FromRole="contactUs" ToRole="admin" />
+        </EntityType>
+        <EntityType Name="fee">
+          <Key>
+            <PropertyRef Name="feeId" />
+          </Key>
+          <Property Name="feeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="studentID" Type="Int32" />
+          <Property Name="fee1" Type="Int32" />
+          <Property Name="status" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="dateTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="student" Relationship="Self.FK__fees__studentID__267ABA7A" FromRole="fees" ToRole="student" />
+        </EntityType>
+        <EntityType Name="route">
+          <Key>
+            <PropertyRef Name="routeId" />
+          </Key>
+          <Property Name="routeId" Type="Int32" Nullable="false" />
+          <Property Name="studentId" Type="Int32" />
+          <Property Name="routeStart" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="routeStop" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="student" Relationship="Self.FK__route__studentId__29572725" FromRole="route" ToRole="student" />
+        </EntityType>
+        <EntityType Name="student">
+          <Key>
+            <PropertyRef Name="studentId" />
+          </Key>
+          <Property Name="studentId" Type="Int32" Nullable="false" />
+          <Property Name="studentName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="studentEmail" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="studentAge" Type="Int32" />
+          <Property Name="studentPassword" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="studentAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="complains" Relationship="Self.FK__complain__studen__30F848ED" FromRole="student" ToRole="complain" />
+          <NavigationProperty Name="fees" Relationship="Self.FK__fees__studentID__267ABA7A" FromRole="student" ToRole="fees" />
+          <NavigationProperty Name="routes" Relationship="Self.FK__route__studentId__29572725" FromRole="student" ToRole="route" />
+        </EntityType>
+        <Association Name="FK__admin__contactId__2E1BDC42">
+          <End Role="contactUs" Type="Self.contactU" Multiplicity="0..1" />
+          <End Role="admin" Type="Self.admin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="contactUs">
+              <PropertyRef Name="contactId" />
+            </Principal>
+            <Dependent Role="admin">
+              <PropertyRef Name="contactId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__complain__studen__30F848ED">
+          <End Role="student" Type="Self.student" Multiplicity="0..1" />
+          <End Role="complain" Type="Self.complain" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="student">
+              <PropertyRef Name="studentId" />
+            </Principal>
+            <Dependent Role="complain">
+              <PropertyRef Name="studentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__fees__studentID__267ABA7A">
+          <End Role="student" Type="Self.student" Multiplicity="0..1" />
+          <End Role="fees" Type="Self.fee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="student">
+              <PropertyRef Name="studentId" />
+            </Principal>
+            <Dependent Role="fees">
+              <PropertyRef Name="studentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__route__studentId__29572725">
+          <End Role="student" Type="Self.student" Multiplicity="0..1" />
+          <End Role="route" Type="Self.route" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="student">
+              <PropertyRef Name="studentId" />
+            </Principal>
+            <Dependent Role="route">
+              <PropertyRef Name="studentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TMSEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="admins" EntityType="Self.admin" />
+          <EntitySet Name="complains" EntityType="Self.complain" />
+          <EntitySet Name="contactUs" EntityType="Self.contactU" />
+          <EntitySet Name="fees" EntityType="Self.fee" />
+          <EntitySet Name="routes" EntityType="Self.route" />
+          <EntitySet Name="students" EntityType="Self.student" />
+          <AssociationSet Name="FK__admin__contactId__2E1BDC42" Association="Self.FK__admin__contactId__2E1BDC42">
+            <End Role="contactUs" EntitySet="contactUs" />
+            <End Role="admin" EntitySet="admins" />
+          </AssociationSet>
+          <AssociationSet Name="FK__complain__studen__30F848ED" Association="Self.FK__complain__studen__30F848ED">
+            <End Role="student" EntitySet="students" />
+            <End Role="complain" EntitySet="complains" />
+          </AssociationSet>
+          <AssociationSet Name="FK__fees__studentID__267ABA7A" Association="Self.FK__fees__studentID__267ABA7A">
+            <End Role="student" EntitySet="students" />
+            <End Role="fees" EntitySet="fees" />
+          </AssociationSet>
+          <AssociationSet Name="FK__route__studentId__29572725" Association="Self.FK__route__studentId__29572725">
+            <End Role="student" EntitySet="students" />
+            <End Role="route" EntitySet="routes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TMSModelStoreContainer" CdmEntityContainer="TMSEntities">
+          <EntitySetMapping Name="admins">
+            <EntityTypeMapping TypeName="TMSModel.admin">
+              <MappingFragment StoreEntitySet="admin">
+                <ScalarProperty Name="adminId" ColumnName="adminId" />
+                <ScalarProperty Name="contactId" ColumnName="contactId" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="complains">
+            <EntityTypeMapping TypeName="TMSModel.complain">
+              <MappingFragment StoreEntitySet="complain">
+                <ScalarProperty Name="complainId" ColumnName="complainId" />
+                <ScalarProperty Name="studentId" ColumnName="studentId" />
+                <ScalarProperty Name="complain1" ColumnName="complain" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="contactUs">
+            <EntityTypeMapping TypeName="TMSModel.contactU">
+              <MappingFragment StoreEntitySet="contactUs">
+                <ScalarProperty Name="contactId" ColumnName="contactId" />
+                <ScalarProperty Name="contactName" ColumnName="contactName" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="message" ColumnName="message" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fees">
+            <EntityTypeMapping TypeName="TMSModel.fee">
+              <MappingFragment StoreEntitySet="fees">
+                <ScalarProperty Name="feeId" ColumnName="feeId" />
+                <ScalarProperty Name="studentID" ColumnName="studentID" />
+                <ScalarProperty Name="fee1" ColumnName="fee" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="dateTime" ColumnName="dateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="routes">
+            <EntityTypeMapping TypeName="TMSModel.route">
+              <MappingFragment StoreEntitySet="route">
+                <ScalarProperty Name="routeId" ColumnName="routeId" />
+                <ScalarProperty Name="studentId" ColumnName="studentId" />
+                <ScalarProperty Name="routeStart" ColumnName="routeStart" />
+                <ScalarProperty Name="routeStop" ColumnName="routeStop" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="students">
+            <EntityTypeMapping TypeName="TMSModel.student">
+              <MappingFragment StoreEntitySet="student">
+                <ScalarProperty Name="studentId" ColumnName="studentId" />
+                <ScalarProperty Name="studentName" ColumnName="studentName" />
+                <ScalarProperty Name="studentEmail" ColumnName="studentEmail" />
+                <ScalarProperty Name="studentAge" ColumnName="studentAge" />
+                <ScalarProperty Name="studentPassword" ColumnName="studentPassword" />
+                <ScalarProperty Name="studentAddress" ColumnName="studentAddress" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
